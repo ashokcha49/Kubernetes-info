@@ -49,3 +49,11 @@ A request for storage by a user/Pod that binds to an available PersistentVolume 
 
 ## StorageClass
 Defines different "classes" or tiers of storage with specific provisioners, parameters, and policies for dynamic volume provisioning. Allows automatic creation of PersistentVolumes when PVCs are created, eliminating the need for manual PV provisioning. Examples include different performance tiers (SSD vs HDD), replication policies, or cloud provider-specific storage types (gp2, gp3 for AWS).
+
+# Kubernetes Configuration Concepts
+
+## ConfigMap
+Stores non-sensitive configuration data as key-value pairs that can be consumed by Pods as environment variables, command-line arguments, or mounted as files. Allows you to decouple configuration from container images, making applications more portable and easier to manage across different environments. ConfigMaps are stored in plain text and are not encrypted, making them suitable for database URLs, feature flags, and application settings.
+
+## Secret
+Stores sensitive data like passwords, API keys, certificates, and tokens in a base64-encoded format with additional security measures. Similar to ConfigMaps but designed specifically for confidential information, with restricted access controls and encryption at rest (depending on cluster configuration). Can be consumed by Pods in the same ways as ConfigMaps but provides better security through RBAC controls and audit logging for sensitive data access.
