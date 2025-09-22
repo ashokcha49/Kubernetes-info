@@ -34,3 +34,18 @@ Defines rules for controlling network traffic flow between Pods, namespaces, and
 
 ## Endpoints
 Automatically created objects that contain the actual IP addresses and ports of Pods that match a Service's selector. Kubernetes continuously updates Endpoints as Pods are created, deleted, or become ready/unready based on health checks. Can be manually created for services that point to external resources outside the cluster. Services use Endpoints to determine where to route traffic, making them a crucial component in service discovery.
+
+
+# Kubernetes Volume concepts
+
+## Volume
+A directory accessible to containers in a Pod that can persist data beyond container restarts and be shared between containers. Volumes are tied to the Pod's lifecycle and are destroyed when the Pod is deleted. Supports various types like emptyDir (temporary), hostPath (node storage), configMap/secret (configuration data), and cloud storage (AWS EBS, GCP PD).
+
+## PersistentVolume (PV)
+A cluster-wide storage resource provisioned by administrators or dynamically created by storage classes, independent of any Pod lifecycle. Represents actual storage (like AWS EBS, NFS, local disk) with specific capacity, access modes, and retention policies. PVs exist independently and can be reused by different PVCs even after the original Pod is deleted.
+
+## PersistentVolumeClaim (PVC)
+A request for storage by a user/Pod that binds to an available PersistentVolume matching the specified requirements (size, access mode, storage class). Acts as an abstraction layer allowing Pods to request storage without knowing the underlying storage details. Once bound to a PV, the PVC can be mounted into Pods and provides persistent storage that survives Pod restarts and rescheduling.
+
+## StorageClass
+Defines different "classes" or tiers of storage with specific provisioners, parameters, and policies for dynamic volume provisioning. Allows automatic creation of PersistentVolumes when PVCs are created, eliminating the need for manual PV provisioning. Examples include different performance tiers (SSD vs HDD), replication policies, or cloud provider-specific storage types (gp2, gp3 for AWS).
