@@ -57,3 +57,20 @@ Stores non-sensitive configuration data as key-value pairs that can be consumed 
 
 ## Secret
 Stores sensitive data like passwords, API keys, certificates, and tokens in a base64-encoded format with additional security measures. Similar to ConfigMaps but designed specifically for confidential information, with restricted access controls and encryption at rest (depending on cluster configuration). Can be consumed by Pods in the same ways as ConfigMaps but provides better security through RBAC controls and audit logging for sensitive data access.
+
+# Security and Access Control
+
+## ServiceAccount
+Provides an identity for processes running in Pods, allowing them to authenticate with the Kubernetes API server. Each namespace has a default ServiceAccount, but you can create custom ones with specific permissions for different applications. ServiceAccounts are automatically mounted into Pods and used for API authentication when applications need to interact with Kubernetes resources.
+
+## Role
+Defines a set of permissions (rules) for accessing Kubernetes resources within a specific namespace. Specifies what actions (verbs like get, list, create, delete) can be performed on which resources (pods, services, configmaps). Roles are namespace-scoped and only grant access to resources within the same namespace where the Role is defined.
+
+## ClusterRole
+Similar to Role but defines permissions at the cluster level, allowing access to resources across all namespaces or cluster-scoped resources. Can grant permissions to non-namespaced resources like nodes, persistent volumes, or cluster-wide operations. ClusterRoles can be bound to users/ServiceAccounts in specific namespaces or cluster-wide depending on the binding type used.
+
+## RoleBinding
+Connects a Role to users, groups, or ServiceAccounts within a specific namespace, granting them the permissions defined in that Role. The binding is namespace-scoped, meaning it only applies to resources within the same namespace as the RoleBinding. Can also bind ClusterRoles to subjects but limits the permissions to the namespace where the RoleBinding exists.
+
+## ClusterRoleBinding
+Connects a ClusterRole to users, groups, or ServiceAccounts at the cluster level, granting permissions across all namespaces or to cluster-scoped resources. Provides cluster-wide access based on the ClusterRole's permissions, making it powerful but requiring careful consideration for security. Used for cluster administrators, monitoring systems, or applications that need cross-namespace access.
